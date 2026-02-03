@@ -3,7 +3,6 @@ export const HTTP_INTERCEPTORS = InjectorToken.get('HTTP_INTERCEPTORS');
 export const APPLICATION_TOKEN = InjectorToken.get('APPLICATION_TOKEN');
 export const APPLICATION_PLUGIN = InjectorToken.get('APPLICATION_PLUGIN');
 export const APPLICATION_METADATA = InjectorToken.get('APPLICATION_METADATA');
-export const RUNTIME_INJECTOR = InjectorToken.get('RUNTIME_INJECTOR');
 export const HISTORY = InjectorToken.get('HISTORY');
 export const MICRO_OPTIONS = InjectorToken.get('MICRO_MANAGER');
 export const APP_INITIALIZER = InjectorToken.get('APP_INITIALIZER');

@@ -1,8 +1,9 @@
+var _a;
 import { __decorate, __metadata } from "tslib";
 import { Injectable } from '@hwy-fm/di';
 import { mergeMap } from 'rxjs/operators';
-import { RequestMethod } from './consts';
-import { HttpHandler } from './http-handler';
+import { RequestMethod } from "./consts.js";
+import { HttpHandler } from "./http-handler.js";
 let HttpClient = class HttpClient {
     constructor(handler) {
         this.handler = handler;
@@ -28,6 +29,6 @@ let HttpClient = class HttpClient {
 };
 HttpClient = __decorate([
     Injectable(),
-    __metadata("design:paramtypes", [HttpHandler])
+    __metadata("design:paramtypes", [typeof (_a = typeof HttpHandler !== "undefined" && HttpHandler) === "function" ? _a : Object])
 ], HttpClient);
 export { HttpClient };

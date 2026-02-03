@@ -1,12 +1,13 @@
+var _a, _b;
 import { __decorate, __metadata } from "tslib";
 import { Injectable, Injector } from '@hwy-fm/di';
-import { HTTP_INTERCEPTORS } from '../../token';
-import { HttpFetchHandler } from './http-fetch-handler';
-import { HttpInterceptHandler } from './http-intercept-handler';
-export { HttpClient } from './http-client';
-export { HttpFetchHandler } from './http-fetch-handler';
-export { HttpHandler } from './http-handler';
-export { createResponse } from './util';
+import { HTTP_INTERCEPTORS } from "../../token/index.js";
+import { HttpFetchHandler } from "./http-fetch-handler.js";
+import { HttpInterceptHandler } from "./http-intercept-handler.js";
+export { HttpClient } from "./http-client.js";
+export { HttpFetchHandler } from "./http-fetch-handler.js";
+export { HttpHandler } from "./http-handler.js";
+export { createResponse } from "./util.js";
 let HttpInterceptingHandler = class HttpInterceptingHandler {
     constructor(fetchHandler, injector) {
         this.fetchHandler = fetchHandler;
@@ -22,6 +23,6 @@ let HttpInterceptingHandler = class HttpInterceptingHandler {
 };
 HttpInterceptingHandler = __decorate([
     Injectable(),
-    __metadata("design:paramtypes", [HttpFetchHandler, Injector])
+    __metadata("design:paramtypes", [typeof (_a = typeof HttpFetchHandler !== "undefined" && HttpFetchHandler) === "function" ? _a : Object, typeof (_b = typeof Injector !== "undefined" && Injector) === "function" ? _b : Object])
 ], HttpInterceptingHandler);
 export { HttpInterceptingHandler };

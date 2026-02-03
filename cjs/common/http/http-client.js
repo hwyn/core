@@ -28,9 +28,10 @@ var HttpClient = /** @class */ (function () {
     HttpClient.prototype.delete = function (req, params) {
         return this.request(consts_1.RequestMethod.DELETE, req, params).pipe((0, operators_1.mergeMap)(function (res) { return res.json(); }));
     };
+    var _a;
     HttpClient = tslib_1.__decorate([
         (0, di_1.Injectable)(),
-        tslib_1.__metadata("design:paramtypes", [http_handler_1.HttpHandler])
+        tslib_1.__metadata("design:paramtypes", [typeof (_a = typeof http_handler_1.HttpHandler !== "undefined" && http_handler_1.HttpHandler) === "function" ? _a : Object])
     ], HttpClient);
     return HttpClient;
 }());

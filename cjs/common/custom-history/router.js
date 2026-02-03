@@ -38,7 +38,7 @@ var Router = /** @class */ (function () {
         return this.pathKey(pathname, routeInfo);
     };
     Router.prototype.loadModule = function (routeInfo) {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return tslib_1.__awaiter(this, void 0, Promise, function () {
             var _a, list, promiseAll;
             var _this = this;
             return tslib_1.__generator(this, function (_b) {
@@ -67,7 +67,7 @@ var Router = /** @class */ (function () {
             return canActivate.map(function (item) { return [routeItem, item]; });
         });
         return execList.reduce(function (ob, _a) {
-            var routeItem = _a[0], activate = _a[1];
+            var _b = tslib_1.__read(_a, 2), routeItem = _b[0], activate = _b[1];
             return ob.pipe((0, operators_1.mergeMap)(function (result) {
                 var service = _this.injector.get(activate);
                 if (result !== false && service) {
@@ -86,8 +86,8 @@ var Router = /** @class */ (function () {
         });
         var list = [];
         execList.forEach(function (_a) {
-            var routeItem = _a[0], _b = _a[1], key = _b[0], result = _b[1];
-            var _c = routeItem.props, props = _c === void 0 ? {} : _c;
+            var _b = tslib_1.__read(_a, 2), routeItem = _b[0], _c = tslib_1.__read(_b[1], 2), key = _c[0], result = _c[1];
+            var _d = routeItem.props, props = _d === void 0 ? {} : _d;
             var server = _this.injector.get(result);
             routeItem.props = props;
             if (server && server.resolve) {
@@ -111,7 +111,7 @@ var Router = /** @class */ (function () {
     };
     Router.prototype.getExecList = function (routeInfo, handler) {
         var _a = routeInfo.list, list = _a === void 0 ? [] : _a;
-        return tslib_1.__spreadArray([], list, true).reverse().reduce(function (arr, routeItem) { return arr.concat(handler(routeItem)); }, []);
+        return tslib_1.__spreadArray([], tslib_1.__read(list), false).reverse().reduce(function (arr, routeItem) { return arr.concat(handler(routeItem)); }, []);
     };
     Router.prototype.addRouteConfig = function (routeItem, result) {
         var _a = result.children, children = _a === void 0 ? [] : _a;

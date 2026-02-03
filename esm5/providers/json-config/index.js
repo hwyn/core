@@ -1,1 +1,1 @@
-export { JsonConfigService } from './json-config.service';
+export { JsonConfigService } from "./json-config.service.js";

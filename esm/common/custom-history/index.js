@@ -1,2 +1,2 @@
-export { CustomHistory } from './custom-history';
-export { Router } from './router';
+export { CustomHistory } from "./custom-history.js";
+export { Router } from "./router.js";

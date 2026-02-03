@@ -35,7 +35,7 @@ var serializeRouter = function (router, parentRouter) {
         var _c = stackRouter.children, children = _c === void 0 ? [] : _c, routeInfo = tslib_1.__rest(stackRouter, ["children"]);
         var _d = stackParentRouter.path, parentPath = _d === void 0 ? "" : _d, _e = stackParentRouter.list, parentList = _e === void 0 ? [] : _e;
         var routePath = "".concat(parentPath, "/").concat(routeInfo.path || '').replace(/[/]{1,}/ig, '/');
-        var list = tslib_1.__spreadArray([routeInfo], parentList, true).filter(filterRoute);
+        var list = tslib_1.__spreadArray([routeInfo], tslib_1.__read(parentList), false).filter(filterRoute);
         if (!(0, lodash_1.isEmpty)(children)) {
             children.forEach(function (r) { return stack.add({ router: r, parentRouter: { path: routePath, list: list } }); });
         }

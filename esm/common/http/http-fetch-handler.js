@@ -1,7 +1,8 @@
+var _a;
 import { __decorate, __metadata } from "tslib";
 import { Injectable } from '@hwy-fm/di';
 import { from } from 'rxjs';
-import { AppContextService } from '../../providers/app-context';
+import { AppContextService } from "../../providers/app-context/index.js";
 let HttpFetchHandler = class HttpFetchHandler {
     constructor(appContext) {
         this.fetch = appContext.fetch;
@@ -12,6 +13,6 @@ let HttpFetchHandler = class HttpFetchHandler {
 };
 HttpFetchHandler = __decorate([
     Injectable(),
-    __metadata("design:paramtypes", [AppContextService])
+    __metadata("design:paramtypes", [typeof (_a = typeof AppContextService !== "undefined" && AppContextService) === "function" ? _a : Object])
 ], HttpFetchHandler);
 export { HttpFetchHandler };

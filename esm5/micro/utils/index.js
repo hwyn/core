@@ -1,3 +1,4 @@
+import { __read, __spreadArray } from "tslib";
 export var templateZip = function (template, mapping) {
     if (mapping === void 0) { mapping = {}; }
     var keys = Object.keys(mapping);
@@ -7,7 +8,8 @@ export var templateZip = function (template, mapping) {
 // eslint-disable-next-line max-lines-per-function
 export var createMicroElementTemplate = function (microName, options) {
     var _a = options.initHtml, initHtml = _a === void 0 ? '' : _a, _b = options.initStyle, initStyle = _b === void 0 ? '' : _b, _c = options.linkToStyles, linkToStyles = _c === void 0 ? [] : _c;
-    return templateZip("\n    (function() {\n      let initStyle = '{initStyle}';\n      let initHtml = '{initHtml}';\n      class Micro".concat(microName, "Element extends HTMLElement {\n        constructor() {\n          super();\n          const shadow = this.attachShadow({ mode: 'open' });\n          const head = this.createHead();\n          shadow.appendChild(head);\n          shadow.appendChild(this.createBody());\n          this.appendStyleNode(head);\n          initStyle = '';\n          initHtml = '';\n        }\n\n        createHead() {\n          const head = document.createElement('div');\n          const _appendChild = head.appendChild.bind(head);\n          head.setAttribute('data-app', 'head');\n          head.innerHTML = initStyle;\n          return head;\n        }\n\n        createBody() {\n          const body = document.createElement('div');\n          body.setAttribute('data-app', 'body');\n          body.innerHTML = initHtml;\n          return body;\n        }\n\n        appendStyleNode(container) {\n          const beforeNode = container.firstChild;\n          {linkToStyles}.forEach(function(styleText) {\n            const style = document.createElement('style');\n            style.appendChild(document.createTextNode(styleText));\n            container.insertBefore(style, beforeNode);\n          });\n        }\n      }\n      customElements.define('").concat(microName, "-tag', Micro").concat(microName, "Element);\n    })();\n  "), {
+    var ElementName = "Micro".concat(microName.replace(/[^A-Za-z]*/g, ''), "Element");
+    return templateZip("\n    (function() {\n      let initStyle = '{initStyle}';\n      let initHtml = '{initHtml}';\n      class ".concat(ElementName, " extends HTMLElement {\n        constructor() {\n          super();\n          const shadow = this.attachShadow({ mode: 'open' });\n          const head = this.createHead();\n          shadow.appendChild(head);\n          shadow.appendChild(this.createBody());\n          this.appendStyleNode(head);\n          initStyle = '';\n          initHtml = '';\n        }\n\n        createHead() {\n          const head = document.createElement('div');\n          const _appendChild = head.appendChild.bind(head);\n          head.setAttribute('data-app', 'head');\n          head.innerHTML = initStyle;\n          return head;\n        }\n\n        createBody() {\n          const body = document.createElement('div');\n          body.setAttribute('data-app', 'body');\n          body.innerHTML = initHtml;\n          return body;\n        }\n\n        appendStyleNode(container) {\n          const beforeNode = container.firstChild;\n          {linkToStyles}.forEach(function(styleText) {\n            const style = document.createElement('style');\n            style.appendChild(document.createTextNode(styleText));\n            container.insertBefore(style, beforeNode);\n          });\n        }\n      }\n      customElements.define('").concat(microName, "-tag', ").concat(ElementName, ");\n    })();\n  "), {
         initStyle: initStyle.replace(/'/g, '\'').replace(/\n/g, ''),
         initHtml: initHtml.replace(/'/g, '\'').replace(/\n/g, ''),
         linkToStyles: JSON.stringify(linkToStyles)
@@ -22,8 +24,8 @@ export var serializableAssets = function (entrypoints, ignores) {
             return;
         }
         var _c = entrypoints[key], _d = _c.js, js = _d === void 0 ? [] : _d, _e = _c.css, css = _e === void 0 ? [] : _e;
-        (_a = staticAssets.js).push.apply(_a, js);
-        (_b = staticAssets.links).push.apply(_b, css);
+        (_a = staticAssets.js).push.apply(_a, __spreadArray([], __read(js), false));
+        (_b = staticAssets.links).push.apply(_b, __spreadArray([], __read(css), false));
     });
     return staticAssets;
 };

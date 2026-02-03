@@ -26,9 +26,10 @@ var HttpInterceptingHandler = /** @class */ (function () {
         }
         return this.chain.handle(req, params);
     };
+    var _a, _b;
     HttpInterceptingHandler = tslib_1.__decorate([
         (0, di_1.Injectable)(),
-        tslib_1.__metadata("design:paramtypes", [http_fetch_handler_1.HttpFetchHandler, di_1.Injector])
+        tslib_1.__metadata("design:paramtypes", [typeof (_a = typeof http_fetch_handler_1.HttpFetchHandler !== "undefined" && http_fetch_handler_1.HttpFetchHandler) === "function" ? _a : Object, typeof (_b = typeof di_1.Injector !== "undefined" && di_1.Injector) === "function" ? _b : Object])
     ], HttpInterceptingHandler);
     return HttpInterceptingHandler;
 }());

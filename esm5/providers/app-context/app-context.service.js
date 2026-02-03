@@ -29,9 +29,10 @@ var AppContextService = /** @class */ (function () {
         enumerable: false,
         configurable: true
     });
+    var _a;
     AppContextService = __decorate([
         __param(0, Inject(Injector)),
-        __metadata("design:paramtypes", [Injector])
+        __metadata("design:paramtypes", [typeof (_a = typeof Injector !== "undefined" && Injector) === "function" ? _a : Object])
     ], AppContextService);
     return AppContextService;
 }());

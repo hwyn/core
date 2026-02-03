@@ -1,3 +1,4 @@
+var _a;
 import { __decorate, __metadata, __param } from "tslib";
 import { Inject, Injector, InjectorToken } from '@hwy-fm/di';
 export const APP_CONTEXT = InjectorToken.get('APP_CONTEXT');
@@ -20,6 +21,6 @@ let AppContextService = class AppContextService {
 };
 AppContextService = __decorate([
     __param(0, Inject(Injector)),
-    __metadata("design:paramtypes", [Injector])
+    __metadata("design:paramtypes", [typeof (_a = typeof Injector !== "undefined" && Injector) === "function" ? _a : Object])
 ], AppContextService);
 export { AppContextService };

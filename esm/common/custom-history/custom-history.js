@@ -1,9 +1,10 @@
+var _a;
 import { __awaiter, __decorate, __metadata } from "tslib";
 import { Injectable, Injector } from '@hwy-fm/di';
 import { lastValueFrom, Subject } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
-import { HISTORY, ROUTER_CONFIG } from '../../token';
-import { Router } from './router';
+import { HISTORY, ROUTER_CONFIG } from "../../token/index.js";
+import { Router } from "./router.js";
 let CustomHistory = class CustomHistory {
     constructor(injector) {
         this.injector = injector;
@@ -95,6 +96,6 @@ let CustomHistory = class CustomHistory {
 };
 CustomHistory = __decorate([
     Injectable(),
-    __metadata("design:paramtypes", [Injector])
+    __metadata("design:paramtypes", [typeof (_a = typeof Injector !== "undefined" && Injector) === "function" ? _a : Object])
 ], CustomHistory);
 export { CustomHistory };

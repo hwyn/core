@@ -1,35 +1,37 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Input = exports.runtimeInjector = exports.makeApplication = exports.Prov = exports.ApplicationPlugin = exports.Register = exports.createRegisterLoader = exports.registerProvider = void 0;
+exports.makeApplication = exports.Input = exports.runtimeInjector = exports.Prov = exports.ApplicationPlugin = exports.Order = exports.Register = exports.createRegisterLoader = exports.PLATFORM_SCOPE = void 0;
 var tslib_1 = require("tslib");
 /* eslint-disable max-len */
 var di_1 = require("@hwy-fm/di");
-var lodash_1 = require("lodash");
 var token_1 = require("../token");
-var _1 = require(".");
-var queue = [];
-var transform = function (key) { return function (_meta, value, type, prop) { return (0, lodash_1.get)(value, key, type && type[prop]); }; };
-var registerProvider = function (provider) { return queue.push(function (ctx) { return ctx.addProvider(provider); }); };
-exports.registerProvider = registerProvider;
+var application_1 = require("./application");
+var di_2 = require("@hwy-fm/di");
+var metadata_transform_1 = require("./metadata.transform");
+exports.PLATFORM_SCOPE = 'platform';
 var createRegisterLoader = function (token) {
     var list;
     return function (loader) {
         if (!list)
-            (0, exports.registerProvider)({ provide: token, useValue: list = [] });
+            (0, di_1.register)({ provide: token, useValue: list = [] });
         list.push(loader);
     };
 };
 exports.createRegisterLoader = createRegisterLoader;
-exports.Register = (0, di_1.makeDecorator)('Register', exports.registerProvider);
-exports.ApplicationPlugin = (0, di_1.makeDecorator)('ApplicationPlugin', undefined, function (plugin) {
-    (0, exports.registerProvider)({ provide: token_1.APPLICATION_PLUGIN, multi: true, useExisting: (0, di_1.setInjectableDef)(plugin) });
+exports.Register = (0, di_1.makeDecorator)('Register', di_1.register);
+exports.Order = (0, di_1.makeDecorator)('Order', function (order) {
+    if (order === void 0) { order = 0; }
+    return ({ order: order });
+}, function (type, _a) {
+    var metadata = _a.metadata;
+    Object.defineProperty(type, '__order__', { value: metadata.order });
 });
-exports.Prov = (0, di_1.makeMethodDecorator)('ProvDecorator', undefined, function (type, method, descriptor) {
-    var meta = [];
-    for (var _i = 3; _i < arguments.length; _i++) {
-        meta[_i - 3] = arguments[_i];
-    }
-    var _a = meta[0], token = _a === void 0 ? method : _a, _b = meta[1], _c = _b === void 0 ? {} : _b, _d = _c.deps, deps = _d === void 0 ? [] : _d, options = tslib_1.__rest(_c, ["deps"]);
+exports.ApplicationPlugin = (0, di_1.makeDecorator)('ApplicationPlugin', undefined, function (plugin) {
+    (0, di_1.register)({ provide: token_1.APPLICATION_PLUGIN, multi: true, useExisting: (0, di_1.setInjectableDef)(plugin) });
+});
+exports.Prov = (0, di_1.makeMethodDecorator)('ProvDecorator', undefined, function (type, method, descriptor, _a) {
+    var meta = _a.args;
+    var _b = tslib_1.__read(meta, 2), _c = _b[0], token = _c === void 0 ? method : _c, _d = _b[1], _e = _d === void 0 ? {} : _d, _f = _e.deps, deps = _f === void 0 ? [] : _f, scope = _e.scope, options = tslib_1.__rest(_e, ["deps", "scope"]);
     var useFactory = function (target) {
         var args = [];
         for (var _i = 1; _i < arguments.length; _i++) {
@@ -37,18 +39,46 @@ exports.Prov = (0, di_1.makeMethodDecorator)('ProvDecorator', undefined, functio
         }
         return descriptor.value.apply(target, args);
     };
-    (0, exports.registerProvider)(tslib_1.__assign(tslib_1.__assign({ provide: token }, options), { useFactory: useFactory, deps: tslib_1.__spreadArray([type], deps, true) }));
+    (0, di_1.register)(tslib_1.__assign(tslib_1.__assign({ provide: token }, options), { useFactory: useFactory, deps: tslib_1.__spreadArray([type], tslib_1.__read(deps), false) }), scope);
 });
+var runtimeInjector = function (toke) { return function () {
+    var injector = di_1.Injector.__prov_def__.factory();
+    if (!injector)
+        throw new Error('RuntimeInjector: No injection context active.');
+    return injector.get(toke);
+}; };
+exports.runtimeInjector = runtimeInjector;
+var InputParam = (0, di_2.makeParamDecorator)('InputParamDecorator', function (key) { return ({ key: key, token: metadata_transform_1.MetadataTransform }); });
+exports.Input = (0, di_1.markInject)(InputParam, di_1.DecoratorFlags.Pipeline);
 var makeApplication = function (handler) {
-    function typeFn(type, metadata) {
-        var applicationContext = new _1.ApplicationContext();
-        queue.forEach(function (fn) { return fn(applicationContext); });
-        applicationContext.registerApp((0, di_1.setInjectableDef)(type), metadata);
-        handler(applicationContext);
+    function typeFn(type, _a) {
+        var _this = this;
+        var _b = tslib_1.__read(_a.args, 1), metadata = _b[0];
+        var activeEnv = di_1.InstantiationPolicy.activeEnv;
+        var metadataFactory = function (injector, ctx) { return tslib_1.__awaiter(_this, void 0, void 0, function () { return tslib_1.__generator(this, function (_a) {
+            return [2 /*return*/, ctx.resolveMetadata(injector, metadata)];
+        }); }); };
+        var appFactory = function (injector, ctx) { return tslib_1.__awaiter(_this, void 0, void 0, function () { return tslib_1.__generator(this, function (_a) {
+            return [2 /*return*/, ctx.getApp(injector, type)];
+        }); }); };
+        var platformProviders = [
+            { provide: di_1.INJECTOR_ENV, useValue: activeEnv },
+            { provide: di_1.INJECTOR_SCOPE, useValue: exports.PLATFORM_SCOPE },
+        ];
+        var providers = [
+            application_1.ApplicationContext,
+            { provide: di_1.INJECTOR_ENV, useValue: activeEnv },
+            { provide: di_1.INJECTOR_SCOPE, useValue: di_1.ROOT_SCOPE },
+            { provide: token_1.APPLICATION_METADATA, useFactory: metadataFactory, deps: [di_1.Injector, application_1.ApplicationContext] },
+            { provide: token_1.APPLICATION_TOKEN, useFactory: appFactory, deps: [di_1.Injector, application_1.ApplicationContext, token_1.APPLICATION_METADATA] }
+        ];
+        var options = {
+            get providers() { return providers; },
+            get platformProviders() { return platformProviders; }
+        };
+        (0, di_1.setInjectableDef)(type);
+        handler(options);
     }
     return (0, di_1.makeDecorator)('Application', undefined, typeFn);
 };
 exports.makeApplication = makeApplication;
-exports.runtimeInjector = (0, exports.createRegisterLoader)(token_1.RUNTIME_INJECTOR);
-var Input = function (key) { return (0, di_1.Inject)(token_1.APPLICATION_METADATA, { metadataName: 'InputPropDecorator', transform: transform(key) }); };
-exports.Input = Input;

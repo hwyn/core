@@ -1,13 +1,14 @@
 import { Injector } from '@hwy-fm/di';
-import { PLATFORM } from '../token';
-export { ApplicationContext, PLATFORM_SCOPE } from './application';
+import { PLATFORM } from "../token/index.js";
+export { PLATFORM_SCOPE } from "./decorator.js";
+export { ApplicationContext } from "./application.js";
 export function createPlatformFactory(createPlatform, ...providers) {
-    return (appContext, ...extraProviders) => {
+    return (options, ...extraProviders) => {
         const injectorProviders = providers.concat(extraProviders);
         if (!createPlatform) {
-            injectorProviders.push(appContext.platformProviders);
+            injectorProviders.push(options.platformProviders);
             return Injector.create(injectorProviders).get(PLATFORM);
         }
-        return createPlatform(appContext, injectorProviders);
+        return createPlatform(options, injectorProviders);
     };
 }

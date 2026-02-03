@@ -1,4 +1,4 @@
-import { __rest, __spreadArray } from "tslib";
+import { __read, __rest, __spreadArray } from "tslib";
 import { isEmpty } from 'lodash';
 var filterRoute = function (_a) {
     var component = _a.component, loadModule = _a.loadModule;
@@ -31,7 +31,7 @@ export var serializeRouter = function (router, parentRouter) {
         var _c = stackRouter.children, children = _c === void 0 ? [] : _c, routeInfo = __rest(stackRouter, ["children"]);
         var _d = stackParentRouter.path, parentPath = _d === void 0 ? "" : _d, _e = stackParentRouter.list, parentList = _e === void 0 ? [] : _e;
         var routePath = "".concat(parentPath, "/").concat(routeInfo.path || '').replace(/[/]{1,}/ig, '/');
-        var list = __spreadArray([routeInfo], parentList, true).filter(filterRoute);
+        var list = __spreadArray([routeInfo], __read(parentList), false).filter(filterRoute);
         if (!isEmpty(children)) {
             children.forEach(function (r) { return stack.add({ router: r, parentRouter: { path: routePath, list: list } }); });
         }

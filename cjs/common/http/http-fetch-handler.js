@@ -12,9 +12,10 @@ var HttpFetchHandler = /** @class */ (function () {
     HttpFetchHandler.prototype.handle = function (req, params) {
         return (0, rxjs_1.from)((typeof fetch !== 'undefined' ? fetch : this.fetch)(req, params));
     };
+    var _a;
     HttpFetchHandler = tslib_1.__decorate([
         (0, di_1.Injectable)(),
-        tslib_1.__metadata("design:paramtypes", [app_context_1.AppContextService])
+        tslib_1.__metadata("design:paramtypes", [typeof (_a = typeof app_context_1.AppContextService !== "undefined" && app_context_1.AppContextService) === "function" ? _a : Object])
     ], HttpFetchHandler);
     return HttpFetchHandler;
 }());

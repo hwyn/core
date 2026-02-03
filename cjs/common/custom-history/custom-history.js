@@ -92,7 +92,7 @@ var CustomHistory = /** @class */ (function () {
         });
     };
     CustomHistory.prototype.resolveIntercept = function (location) {
-        return tslib_1.__awaiter(this, void 0, void 0, function () {
+        return tslib_1.__awaiter(this, void 0, Promise, function () {
             var routeInfo, status;
             return tslib_1.__generator(this, function (_a) {
                 switch (_a.label) {
@@ -116,7 +116,7 @@ var CustomHistory = /** @class */ (function () {
         });
     };
     CustomHistory.prototype.createRouteInfo = function (location) {
-        var _a = this.parse(location), pathname = _a[0], query = _a[1];
+        var _a = tslib_1.__read(this.parse(location), 2), pathname = _a[0], query = _a[1];
         var _b = this.router.getRouterByPath(pathname), params = _b.params, _c = _b.list, list = _c === void 0 ? [] : _c;
         return { path: pathname, query: query, params: params, list: list };
     };
@@ -134,14 +134,15 @@ var CustomHistory = /** @class */ (function () {
     CustomHistory.prototype.parseSearch = function (search) {
         var query = {};
         (search.match(/[^&]+/ig) || []).forEach(function (item) {
-            var _a = item.split('='), name = _a[0], value = _a[1];
+            var _a = tslib_1.__read(item.split('='), 2), name = _a[0], value = _a[1];
             query[name] = value;
         });
         return query;
     };
+    var _a;
     CustomHistory = tslib_1.__decorate([
         (0, di_1.Injectable)(),
-        tslib_1.__metadata("design:paramtypes", [di_1.Injector])
+        tslib_1.__metadata("design:paramtypes", [typeof (_a = typeof di_1.Injector !== "undefined" && di_1.Injector) === "function" ? _a : Object])
     ], CustomHistory);
     return CustomHistory;
 }());

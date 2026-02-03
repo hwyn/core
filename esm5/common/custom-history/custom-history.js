@@ -1,9 +1,9 @@
-import { __awaiter, __decorate, __generator, __metadata } from "tslib";
+import { __awaiter, __decorate, __generator, __metadata, __read } from "tslib";
 import { Injectable, Injector } from '@hwy-fm/di';
 import { lastValueFrom, Subject } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
-import { HISTORY, ROUTER_CONFIG } from '../../token';
-import { Router } from './router';
+import { HISTORY, ROUTER_CONFIG } from "../../token/index.js";
+import { Router } from "./router.js";
 var CustomHistory = /** @class */ (function () {
     function CustomHistory(injector) {
         this.injector = injector;
@@ -89,7 +89,7 @@ var CustomHistory = /** @class */ (function () {
         });
     };
     CustomHistory.prototype.resolveIntercept = function (location) {
-        return __awaiter(this, void 0, void 0, function () {
+        return __awaiter(this, void 0, Promise, function () {
             var routeInfo, status;
             return __generator(this, function (_a) {
                 switch (_a.label) {
@@ -113,7 +113,7 @@ var CustomHistory = /** @class */ (function () {
         });
     };
     CustomHistory.prototype.createRouteInfo = function (location) {
-        var _a = this.parse(location), pathname = _a[0], query = _a[1];
+        var _a = __read(this.parse(location), 2), pathname = _a[0], query = _a[1];
         var _b = this.router.getRouterByPath(pathname), params = _b.params, _c = _b.list, list = _c === void 0 ? [] : _c;
         return { path: pathname, query: query, params: params, list: list };
     };
@@ -131,14 +131,15 @@ var CustomHistory = /** @class */ (function () {
     CustomHistory.prototype.parseSearch = function (search) {
         var query = {};
         (search.match(/[^&]+/ig) || []).forEach(function (item) {
-            var _a = item.split('='), name = _a[0], value = _a[1];
+            var _a = __read(item.split('='), 2), name = _a[0], value = _a[1];
             query[name] = value;
         });
         return query;
     };
+    var _a;
     CustomHistory = __decorate([
         Injectable(),
-        __metadata("design:paramtypes", [Injector])
+        __metadata("design:paramtypes", [typeof (_a = typeof Injector !== "undefined" && Injector) === "function" ? _a : Object])
     ], CustomHistory);
     return CustomHistory;
 }());

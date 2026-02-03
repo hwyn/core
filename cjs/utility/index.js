@@ -1,10 +1,39 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.isPlainObject = isPlainObject;
+exports.getValue = getValue;
 exports.cloneDeepPlain = cloneDeepPlain;
-var lodash_1 = require("lodash");
+exports.sortByOrder = sortByOrder;
+function isPlainObject(val) {
+    return !!val && typeof val === 'object' && (Object.getPrototypeOf(val) === null || Object.getPrototypeOf(val) === Object.prototype);
+}
+function getValue(source, path) {
+    if (source == null || !path)
+        return undefined;
+    var keys = path.replace(/\[/g, '.').replace(/['"\]]/g, '').split('.').filter(Boolean);
+    return keys.reduce(function (obj, key) { return (obj == null ? undefined : obj[key]); }, source);
+}
 function cloneDeepPlain(value) {
-    return (0, lodash_1.cloneDeepWith)(value, function (obj) {
-        if (Object.prototype.toString.call(obj) === '[object Object]' && !(0, lodash_1.isPlainObject)(obj))
-            return obj;
-    });
+    if (value === null || typeof value !== 'object')
+        return value;
+    if (Array.isArray(value))
+        return value.map(function (item) { return cloneDeepPlain(item); });
+    if (!isPlainObject(value))
+        return value;
+    var result = {};
+    for (var key in value) {
+        if (Object.prototype.hasOwnProperty.call(value, key)) {
+            result[key] = cloneDeepPlain(value[key]);
+        }
+    }
+    return result;
+}
+function sortByOrder(types) {
+    var getOrder = function (type) {
+        var _a, _b;
+        if (typeof type === 'function')
+            return (_a = type.__order__) !== null && _a !== void 0 ? _a : 0;
+        return (_b = Object.getPrototypeOf(type).constructor.__order__) !== null && _b !== void 0 ? _b : 0;
+    };
+    return types.sort(function (pre, next) { return getOrder(pre) - getOrder(next); });
 }

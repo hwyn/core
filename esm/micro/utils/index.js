@@ -6,11 +6,12 @@ export const templateZip = (template, mapping = {}) => {
 // eslint-disable-next-line max-lines-per-function
 export const createMicroElementTemplate = (microName, options) => {
     const { initHtml = '', initStyle = '', linkToStyles = [] } = options;
+    const ElementName = `Micro${microName.replace(/[^A-Za-z]*/g, '')}Element`;
     return templateZip(`
     (function() {
       let initStyle = '{initStyle}';
       let initHtml = '{initHtml}';
-      class Micro${microName}Element extends HTMLElement {
+      class ${ElementName} extends HTMLElement {
         constructor() {
           super();
           const shadow = this.attachShadow({ mode: 'open' });
@@ -46,7 +47,7 @@ export const createMicroElementTemplate = (microName, options) => {
           });
         }
       }
-      customElements.define('${microName}-tag', Micro${microName}Element);
+      customElements.define('${microName}-tag', ${ElementName});
     })();
   `, {
         initStyle: initStyle.replace(/'/g, '\'').replace(/\n/g, ''),

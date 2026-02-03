@@ -1,4 +1,5 @@
 import { Provider } from '@hwy-fm/di';
-import type { ApplicationContext } from './application';
-export { ApplicationContext, PLATFORM_SCOPE } from './application';
-export declare function createPlatformFactory<T>(createPlatform: ((appContext: ApplicationContext, providers: Provider[]) => T) | null, ...providers: Provider[]): (appContext: ApplicationContext, ...extraProviders: Provider[]) => T;
+import type { BootstrapOptions } from './decorator';
+export { PLATFORM_SCOPE } from './decorator';
+export { ApplicationContext } from './application';
+export declare function createPlatformFactory<T>(createPlatform: ((options: BootstrapOptions, providers: Provider[]) => T) | null, ...providers: Provider[]): (options: BootstrapOptions, ...extraProviders: Provider[]) => T;

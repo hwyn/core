@@ -1,8 +1,8 @@
 import { __assign, __decorate, __metadata } from "tslib";
 import { Injectable } from '@hwy-fm/di';
 import { mergeMap } from 'rxjs/operators';
-import { RequestMethod } from './consts';
-import { HttpHandler } from './http-handler';
+import { RequestMethod } from "./consts.js";
+import { HttpHandler } from "./http-handler.js";
 var HttpClient = /** @class */ (function () {
     function HttpClient(handler) {
         this.handler = handler;
@@ -25,9 +25,10 @@ var HttpClient = /** @class */ (function () {
     HttpClient.prototype.delete = function (req, params) {
         return this.request(RequestMethod.DELETE, req, params).pipe(mergeMap(function (res) { return res.json(); }));
     };
+    var _a;
     HttpClient = __decorate([
         Injectable(),
-        __metadata("design:paramtypes", [HttpHandler])
+        __metadata("design:paramtypes", [typeof (_a = typeof HttpHandler !== "undefined" && HttpHandler) === "function" ? _a : Object])
     ], HttpClient);
     return HttpClient;
 }());

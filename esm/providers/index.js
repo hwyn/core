@@ -1,2 +1,2 @@
-export { APP_CONTEXT, AppContextService } from './app-context';
-export { JsonConfigService } from './json-config';
+export { APP_CONTEXT, AppContextService } from "./app-context/index.js";
+export { JsonConfigService } from "./json-config/index.js";

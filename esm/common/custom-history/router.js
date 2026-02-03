@@ -2,7 +2,7 @@ import { __awaiter } from "tslib";
 import { cloneDeepWith, isPlainObject } from 'lodash';
 import { forkJoin, from, isObservable, of } from 'rxjs';
 import { mergeMap, tap } from 'rxjs/operators';
-import { addRouterKey, serializeRouter } from './serialize-router';
+import { addRouterKey, serializeRouter } from "./serialize-router.js";
 const getRex = () => /^:([^:]+)/g;
 function type(obj) {
     return Object.prototype.toString.call(obj).replace(/\[object (.*)\]/, '$1');

@@ -1,17 +1,5 @@
-import { Provider, Type } from '@hwy-fm/di';
-export declare const PLATFORM_SCOPE = "platform";
+import { Injector, Type } from '@hwy-fm/di';
 export declare class ApplicationContext {
-    private dynamicInjectors;
-    private _providers;
-    private _platformProviders;
-    constructor(_platformProv?: Provider[], _prov?: Provider[]);
-    private addDefaultProvider;
-    private addInjector;
-    private deleteInjector;
-    private setDynamicProv;
-    addProvider(providers: Provider): void;
-    private getApp;
-    registerApp(app: Type, metadata?: any): void;
-    get platformProviders(): Provider[];
-    get providers(): Provider[];
+    resolveMetadata(injector: Injector, metadata: any): Promise<any>;
+    getApp(injector: Injector, app: Type): Promise<any>;
 }

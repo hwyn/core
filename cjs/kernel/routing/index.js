@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.RouteStrategy = exports.RouteMatchResult = exports.HTTP_PROTOCOL = exports.ROUTE_MATCHER = void 0;
+var tslib_1 = require("tslib");
+require("./aggregate");
+require("./radix/strategy");
+var strategy_1 = require("./strategy");
+Object.defineProperty(exports, "ROUTE_MATCHER", { enumerable: true, get: function () { return strategy_1.ROUTE_MATCHER; } });
+Object.defineProperty(exports, "HTTP_PROTOCOL", { enumerable: true, get: function () { return strategy_1.HTTP_PROTOCOL; } });
+Object.defineProperty(exports, "RouteMatchResult", { enumerable: true, get: function () { return strategy_1.RouteMatchResult; } });
+Object.defineProperty(exports, "RouteStrategy", { enumerable: true, get: function () { return strategy_1.RouteStrategy; } });
+tslib_1.__exportStar(require("./router"), exports);
